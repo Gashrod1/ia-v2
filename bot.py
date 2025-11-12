@@ -148,7 +148,7 @@ if __name__ == "__main__":
     # ========================================================================
     # HARDWARE CONFIGURATION
     # ========================================================================
-    n_proc = 48                  # Number of parallel game instances (adjust for your CPU)
+    n_proc = 80                  # Number of parallel game instances (adjust for your CPU)
     minibatch_size = 50_000      # Must divide evenly into ppo_batch_size
     device = "cpu"            # "cuda:0" for GPU, "cpu" for CPU-only training
     
@@ -208,8 +208,8 @@ if __name__ == "__main__":
                       # Phase 1: 2e-4 (high for fast early learning)
                       # Phase 2: 1e-4 (lower once bot is hitting ball)
                       # Phase 3: 0.8e-4 or lower (for advanced mechanics)
-                      policy_lr=1.5e-4,                       # Phase 1 learning rate
-                      critic_lr=1.5e-4,                       # Keep same as policy_lr
+                      policy_lr=1.2e-4,                       # Phase 1 learning rate
+                      critic_lr=1.2e-4,                       # Keep same as policy_lr
                       
                       # ===== NORMALIZATION =====
                       standardize_returns=True,
