@@ -208,8 +208,8 @@ if __name__ == "__main__":
                       # Phase 1: 2e-4 (high for fast early learning)
                       # Phase 2: 1e-4 (lower once bot is hitting ball)
                       # Phase 3: 0.8e-4 or lower (for advanced mechanics)
-                      policy_lr=2e-4,                       # Phase 1 learning rate
-                      critic_lr=2e-4,                       # Keep same as policy_lr
+                      policy_lr=1.5e-4,                       # Phase 1 learning rate
+                      critic_lr=1.5e-4,                       # Keep same as policy_lr
                       
                       # ===== NORMALIZATION =====
                       standardize_returns=True,
