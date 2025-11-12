@@ -1,0 +1,28 @@
+{
+  "os": "Windows-10-10.0.26100-SP0",
+  "python": "CPython 3.11.9",
+  "startedAt": "2025-11-12T22:01:44.441014Z",
+  "program": "E:\\iaV2\\bot.py",
+  "codePath": "bot.py",
+  "codePathLocal": "bot.py",
+  "git": {
+    "remote": "https://github.com/Gashrod1/ia-v2.git",
+    "commit": "9fe4ff3114c5bed932a47d70ecc8019f86ad9aba"
+  },
+  "email": "cuteslenaa@gmail.com",
+  "root": "E:\\iaV2",
+  "host": "3FBTS4CR",
+  "executable": "C:\\Users\\cutes\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+  "cpu_count": 6,
+  "cpu_count_logical": 6,
+  "disk": {
+    "/": {
+      "total": "1000186310656",
+      "used": "866446868480"
+    }
+  },
+  "memory": {
+    "total": "17122422784"
+  },
+  "writerId": "svj865p8ds1ek2jrs32pztodo64xq6jw"
+}
