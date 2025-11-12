@@ -98,7 +98,7 @@ def build_rocketsim_env():
     from rlgym_sim.utils.action_parsers import ContinuousAction
 
     # ===== ENVIRONMENT CONFIGURATION =====
-    spawn_opponents = False              # Phase 1: No opponents (focus on ball control)
+    spawn_opponents = True              # Phase 1: No opponents (focus on ball control)
     team_size = 1                        # Single agent training
     timeout_seconds = 12                 # Timeout between 10-15 seconds
     timeout_ticks = int(round(timeout_seconds * GAME_TICK_RATE / TICK_SKIP))
