@@ -1,0 +1,92 @@
+_wandb:
+    value:
+        cli_version: 0.22.3
+        e:
+            toj6klk5tp3du1hhwbc2wg6o1eitou4v:
+                codePath: bot.py
+                codePathLocal: bot.py
+                cpu_count: 6
+                cpu_count_logical: 6
+                disk:
+                    /:
+                        total: "1000186310656"
+                        used: "866186043392"
+                email: cuteslenaa@gmail.com
+                executable: C:\Users\cutes\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe
+                git:
+                    commit: 5b4ce97b32df2893b1c709942a26c4f3becd6c95
+                    remote: https://github.com/Gashrod1/ia-v2.git
+                host: 3FBTS4CR
+                memory:
+                    total: "17122422784"
+                os: Windows-10-10.0.26100-SP0
+                program: E:\iaV2\bot.py
+                python: CPython 3.11.9
+                root: E:\iaV2
+                startedAt: "2025-11-12T18:34:09.471638Z"
+                writerId: toj6klk5tp3du1hhwbc2wg6o1eitou4v
+        m: []
+        python_version: 3.11.9
+        t:
+            "1":
+                - 1
+            "2":
+                - 1
+            "3":
+                - 2
+                - 5
+                - 14
+                - 16
+                - 62
+            "4": 3.11.9
+            "5": 0.22.3
+            "8":
+                - 3
+            "10":
+                - 20
+            "12": 0.22.3
+            "13": windows-amd64
+critic_layer_sizes:
+    value:
+        - 512
+        - 512
+        - 256
+critic_lr:
+    value: 0.0002
+exp_buffer_size:
+    value: 150000
+gae_gamma:
+    value: 0.99
+gae_lambda:
+    value: 0.95
+min_inference_size:
+    value: 36
+n_proc:
+    value: 48
+policy_layer_sizes:
+    value:
+        - 512
+        - 512
+        - 256
+policy_lr:
+    value: 0.0002
+ppo_batch_size:
+    value: 50000
+ppo_clip_range:
+    value: 0.2
+ppo_ent_coef:
+    value: 0.01
+ppo_epochs:
+    value: 2
+ppo_minibatch_size:
+    value: 50000
+shm_buffer_size:
+    value: 8192
+standardize_obs:
+    value: true
+standardize_returns:
+    value: true
+timestep_limit:
+    value: 1e+16
+ts_per_iteration:
+    value: 50000
