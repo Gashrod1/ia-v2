@@ -1,0 +1,40 @@
+{
+  "os":  "Linux-6.8.0-79-generic-x86_64-with-glibc2.39",
+  "python":  "CPython 3.12.3",
+  "startedAt":  "2025-11-12T18:51:24.601433Z",
+  "program":  "/workspace/ia-v2/bot.py",
+  "codePath":  "bot.py",
+  "codePathLocal":  "bot.py",
+  "git":  {
+    "remote":  "https://github.com/Gashrod1/ia-v2.git",
+    "commit":  "c7dbbe5a44c99f52f09d134005a1a6c30f4fad58"
+  },
+  "email":  "cuteslenaa@gmail.com",
+  "root":  "/workspace/ia-v2",
+  "host":  "696541736f48",
+  "executable":  "/venv/main/bin/python",
+  "cpu_count":  48,
+  "cpu_count_logical":  96,
+  "gpu":  "NVIDIA GeForce RTX 4090",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "26843545600",
+      "used":  "9795620864"
+    }
+  },
+  "memory":  {
+    "total":  "270084517888"
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA GeForce RTX 4090",
+      "memoryTotal":  "25757220864",
+      "cudaCores":  16384,
+      "architecture":  "Ada",
+      "uuid":  "GPU-9edc6618-19b5-3d79-c635-621d872067f9"
+    }
+  ],
+  "cudaVersion":  "13.0",
+  "writerId":  "g2m48rapfalkao65vjaq5ixlbng7avur"
+}
