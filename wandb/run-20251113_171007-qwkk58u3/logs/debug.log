@@ -1,0 +1,22 @@
+2025-11-13 17:10:07,109 INFO    MainThread:6704 [wandb_setup.py:_flush():81] Current SDK version is 0.22.3
+2025-11-13 17:10:07,109 INFO    MainThread:6704 [wandb_setup.py:_flush():81] Configure stats pid to 6704
+2025-11-13 17:10:07,109 INFO    MainThread:6704 [wandb_setup.py:_flush():81] Loading settings from C:\Users\cutes\.config\wandb\settings
+2025-11-13 17:10:07,109 INFO    MainThread:6704 [wandb_setup.py:_flush():81] Loading settings from E:\iaV2\wandb\settings
+2025-11-13 17:10:07,109 INFO    MainThread:6704 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-11-13 17:10:07,109 INFO    MainThread:6704 [wandb_init.py:setup_run_log_directory():706] Logging user logs to E:\iaV2\wandb\run-20251113_171007-qwkk58u3\logs\debug.log
+2025-11-13 17:10:07,110 INFO    MainThread:6704 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to E:\iaV2\wandb\run-20251113_171007-qwkk58u3\logs\debug-internal.log
+2025-11-13 17:10:07,110 INFO    MainThread:6704 [wandb_init.py:init():833] calling init triggers
+2025-11-13 17:10:07,110 INFO    MainThread:6704 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'n_proc': 48, 'min_inference_size': 36, 'timestep_limit': 1e+16, 'exp_buffer_size': 150000, 'ts_per_iteration': 50000, 'standardize_returns': True, 'standardize_obs': True, 'policy_layer_sizes': [512, 512, 256], 'critic_layer_sizes': [512, 512, 256], 'ppo_epochs': 2, 'ppo_batch_size': 50000, 'ppo_minibatch_size': 50000, 'ppo_ent_coef': 0.01, 'ppo_clip_range': 0.2, 'gae_lambda': 0.95, 'gae_gamma': 0.99, 'policy_lr': 0.0002, 'critic_lr': 0.0002, 'shm_buffer_size': 8192, '_wandb': {}}
+2025-11-13 17:10:07,110 INFO    MainThread:6704 [wandb_init.py:init():881] starting backend
+2025-11-13 17:10:09,362 INFO    MainThread:6704 [wandb_init.py:init():884] sending inform_init request
+2025-11-13 17:10:09,374 INFO    MainThread:6704 [wandb_init.py:init():892] backend started and connected
+2025-11-13 17:10:09,375 INFO    MainThread:6704 [wandb_init.py:init():962] updated telemetry
+2025-11-13 17:10:09,407 INFO    MainThread:6704 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-11-13 17:10:10,110 INFO    MainThread:6704 [wandb_init.py:init():1028] run resumed
+2025-11-13 17:10:10,111 INFO    MainThread:6704 [wandb_init.py:init():1033] starting run threads in backend
+2025-11-13 17:10:10,190 INFO    MainThread:6704 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-13 17:10:10,190 INFO    MainThread:6704 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-13 17:10:10,190 INFO    MainThread:6704 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-13 17:10:10,190 INFO    MainThread:6704 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-13 17:10:10,192 INFO    MainThread:6704 [wandb_init.py:init():1073] run started, returning control to user process

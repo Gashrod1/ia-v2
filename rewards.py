@@ -149,3 +149,54 @@ class FlipDisciplineReward(RewardFunction):
         
         self.last_on_ground = currently_on_ground
         return 0
+
+
+class SaveBoostReward(RewardFunction):
+    """
+    Rewards having boost to encourage collecting and not wasting it.
+    Uses sqrt to make boost more valuable when you have less of it.
+    """
+    def __init__(self):
+        super().__init__()
+    
+    def reset(self, initial_state: GameState):
+        pass
+    
+    def get_reward(self, player: PlayerData, state: GameState, previous_action: np.ndarray) -> float:
+        # player.boost_amount ranges from 0 to 1
+        # Using sqrt makes low boost more important: 0->0.5 boost is more valuable than 0.5->1
+        return np.sqrt(player.boost_amount)
+
+
+class TouchStrengthReward(RewardFunction):
+    """
+    Scales touch reward based on how much the ball's velocity changed.
+    Strong shots/touches give more reward than weak pushes.
+    Prevents farming touches by constantly pushing the ball.
+    """
+    def __init__(self):
+        super().__init__()
+        self.previous_ball_vel = None
+    
+    def reset(self, initial_state: GameState):
+        self.previous_ball_vel = initial_state.ball.linear_velocity.copy()
+    
+    def get_reward(self, player: PlayerData, state: GameState, previous_action: np.ndarray) -> float:
+        reward = 0
+        
+        if player.ball_touched:
+            # Calculate change in ball velocity
+            current_ball_vel = state.ball.linear_velocity
+            vel_change = np.linalg.norm(current_ball_vel - self.previous_ball_vel)
+            
+            # Normalize by max possible ball speed (around 6000 uu/s)
+            MAX_BALL_SPEED = 6000
+            reward = vel_change / MAX_BALL_SPEED
+            
+            # Clamp to [0, 1] range
+            reward = min(reward, 1.0)
+        
+        # Update previous velocity for next step
+        self.previous_ball_vel = state.ball.linear_velocity.copy()
+        
+        return reward

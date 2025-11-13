@@ -22,7 +22,7 @@ torch.load = _patched_torch_load
 
 from rlgym_sim.utils.gamestates import GameState
 from rlgym_ppo.util import MetricsLogger
-from rewards import InAirReward, SpeedTowardBallReward, HandbrakePenalty, FlipDisciplineReward
+from rewards import InAirReward, SpeedTowardBallReward, HandbrakePenalty, FlipDisciplineReward, SaveBoostReward, TouchStrengthReward
 
 # Game timing constants
 TICK_SKIP = 8  # Number of physics ticks per step
@@ -114,13 +114,15 @@ def build_rocketsim_env():
     
     reward_fn = CombinedReward.from_zipped(
         # Format is (func, weight)
-        # PHASE 1: Learn to consistently hit the ball
-        (EventReward(touch=1), 2.0),              # PRIMARY: Reward every ball touch heavily
-        (SpeedTowardBallReward(), 4.0),            # Move toward ball aggressively
-        (FaceBallReward(), 0.5),                   # Orient toward ball, don't drive backward
-        (VelocityPlayerToBallReward(), 1.0),       # Get to ball first (competitive)
-        (EventReward(team_goal=1, concede=-1), 40), # Still reward goals, but not primary focus
-        (VelocityBallToGoalReward(), 5.0),         # Light directional guidance
+        # PHASE 2: Bot hits ball consistently, now learn to score goals
+        (EventReward(team_goal=1, concede=-1), 20),  # Goal reward (guide says ~20, not massive)
+        (VelocityBallToGoalReward(), 5.0),           # PRIMARY: Push ball toward goal (stronger than approach)
+        (TouchStrengthReward(), 3.0),                # Reward strong touches, not weak pushes
+        (VelocityPlayerToBallReward(), 1.0),         # Get to ball first (ZERO-SUM competitive)
+        (SpeedTowardBallReward(), 1.0),              # Move toward ball (reduced, less than VelocityBallToGoal)
+        (SaveBoostReward(), 0.5),                    # Encourage collecting and saving boost
+        (FaceBallReward(), 0.1),                     # Don't drive backward at ball
+        (InAirReward(), 0.15),                       # Don't forget how to jump (guide recommends 0.15)
     )
 
     obs_builder = DefaultObs(
@@ -151,9 +153,9 @@ if __name__ == "__main__":
     # ========================================================================
     # HARDWARE CONFIGURATION
     # ========================================================================
-    n_proc = 16                  # Number of parallel game instances (adjust for your CPU)
+    n_proc = 1                  # Number of parallel game instances (adjust for your CPU)
     minibatch_size = 50_000      # Must divide evenly into ppo_batch_size
-    device = "cuda:0"            # "cuda:0" for GPU, "cpu" for CPU-only training
+    device = "cpu"            # "cuda:0" for GPU, "cpu" for CPU-only training
     
     # Network architecture - adjust based on your hardware
     # Bigger networks learn better but require more GPU/CPU power
