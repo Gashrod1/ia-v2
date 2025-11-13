@@ -1,0 +1,28 @@
+2025-11-13 11:28:29,630 INFO    MainThread:87155 [wandb_setup.py:_flush():81] Current SDK version is 0.22.3
+2025-11-13 11:28:29,631 INFO    MainThread:87155 [wandb_setup.py:_flush():81] Configure stats pid to 87155
+2025-11-13 11:28:29,631 INFO    MainThread:87155 [wandb_setup.py:_flush():81] Loading settings from /root/.config/wandb/settings
+2025-11-13 11:28:29,631 INFO    MainThread:87155 [wandb_setup.py:_flush():81] Loading settings from /workspace/ia-v2/wandb/settings
+2025-11-13 11:28:29,631 INFO    MainThread:87155 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-11-13 11:28:29,631 INFO    MainThread:87155 [wandb_init.py:setup_run_log_directory():706] Logging user logs to /workspace/ia-v2/wandb/run-20251113_112829-qwkk58u3/logs/debug.log
+2025-11-13 11:28:29,631 INFO    MainThread:87155 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to /workspace/ia-v2/wandb/run-20251113_112829-qwkk58u3/logs/debug-internal.log
+2025-11-13 11:28:29,631 INFO    MainThread:87155 [wandb_init.py:init():833] calling init triggers
+2025-11-13 11:28:29,631 INFO    MainThread:87155 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'n_proc': 48, 'min_inference_size': 36, 'timestep_limit': 1e+16, 'exp_buffer_size': 150000, 'ts_per_iteration': 50000, 'standardize_returns': True, 'standardize_obs': True, 'policy_layer_sizes': [512, 512, 256], 'critic_layer_sizes': [512, 512, 256], 'ppo_epochs': 2, 'ppo_batch_size': 50000, 'ppo_minibatch_size': 50000, 'ppo_ent_coef': 0.01, 'ppo_clip_range': 0.2, 'gae_lambda': 0.95, 'gae_gamma': 0.99, 'policy_lr': 0.0002, 'critic_lr': 0.0002, 'shm_buffer_size': 8192, '_wandb': {}}
+2025-11-13 11:28:29,631 INFO    MainThread:87155 [wandb_init.py:init():881] starting backend
+2025-11-13 11:28:29,842 INFO    MainThread:87155 [wandb_init.py:init():884] sending inform_init request
+2025-11-13 11:28:29,851 INFO    MainThread:87155 [wandb_init.py:init():892] backend started and connected
+2025-11-13 11:28:29,854 INFO    MainThread:87155 [wandb_init.py:init():962] updated telemetry
+2025-11-13 11:28:29,862 INFO    MainThread:87155 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-11-13 11:28:30,613 INFO    MainThread:87155 [wandb_init.py:init():1028] run resumed
+2025-11-13 11:28:30,617 INFO    MainThread:87155 [wandb_init.py:init():1033] starting run threads in backend
+2025-11-13 11:28:30,693 INFO    MainThread:87155 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-13 11:28:30,693 INFO    MainThread:87155 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-13 11:28:30,694 INFO    MainThread:87155 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-13 11:28:30,694 INFO    MainThread:87155 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-13 11:28:30,698 INFO    MainThread:87155 [wandb_init.py:init():1073] run started, returning control to user process
+2025-11-13 12:25:22,636 INFO    MainThread:87155 [wandb_run.py:_finish():2272] finishing run gashfraude-epsi/rlgym-ppo/qwkk58u3
+2025-11-13 12:25:22,637 INFO    MainThread:87155 [wandb_run.py:_atexit_cleanup():2471] got exitcode: 0
+2025-11-13 12:25:22,638 INFO    MainThread:87155 [wandb_run.py:_restore():2453] restore
+2025-11-13 12:25:22,638 INFO    MainThread:87155 [wandb_run.py:_restore():2459] restore done
+2025-11-13 12:25:23,973 INFO    wandb-AsyncioManager-main:87155 [service_client.py:_forward_responses():80] Reached EOF.
+2025-11-13 12:25:23,973 INFO    wandb-AsyncioManager-main:87155 [mailbox.py:close():137] Closing mailbox, abandoning 2 handles.
