@@ -114,14 +114,15 @@ def build_rocketsim_env():
     
     reward_fn = CombinedReward.from_zipped(
         # Format is (func, weight)
-        # PHASE 2: Bot hits ball consistently, now learn to score goals
-        (EventReward(team_goal=1, concede=-1), 25),  # HUGE reward for scoring goals!
-        (VelocityBallToGoalReward(), 4.0), 
-        (VelocityPlayerToBallReward(), 1.0),       # Zero-sum: get to ball first (competitive)
-        (EventReward(touch=1), 3),                # Still reward touches, but less than before
-        (SpeedTowardBallReward(), 0.2),              # Move towards the ball (reduced)
-        (FaceBallReward(), 0.05),                     # Don't drive backward at the ball
-        (InAirReward(), 0.2),                     # Don't forget how to jump!
+        # PHASE 1: Learn to consistently hit the ball
+        (EventReward(touch=1), 10.0),              # PRIMARY: Reward every ball touch heavily
+        (SpeedTowardBallReward(), 2.0),            # Move toward ball aggressively
+        (FaceBallReward(), 0.5),                   # Orient toward ball, don't drive backward
+        (VelocityPlayerToBallReward(), 1.0),       # Get to ball first (competitive)
+        (EventReward(team_goal=1, concede=-1), 10), # Still reward goals, but not primary focus
+        (VelocityBallToGoalReward(), 1.0),         # Light directional guidance
+        (HandbrakePenalty(), 1.0),                 # Prevent sloppy handbrake usage
+        (FlipDisciplineReward(), 1.0),             # Prevent wasteful flips during approach
     )
 
     obs_builder = DefaultObs(
@@ -227,7 +228,7 @@ if __name__ == "__main__":
                       timestep_limit=10e15,                 # Effectively infinite - stop manually
                       
                       # ===== RENDERING =====
-                      render=False,                         # Set to True to watch bot play (slows training)
+                      render=True,                         # Set to True to watch bot play (slows training)
                       render_delay=STEP_TIME,
                       
                       # ===== LOGGING =====
