@@ -153,9 +153,9 @@ if __name__ == "__main__":
     # ========================================================================
     # HARDWARE CONFIGURATION
     # ========================================================================
-    n_proc = 1                  # Number of parallel game instances (adjust for your CPU)
+    n_proc = 64                  # Number of parallel game instances (adjust for your CPU)
     minibatch_size = 50_000      # Must divide evenly into ppo_batch_size
-    device = "cpu"            # "cuda:0" for GPU, "cpu" for CPU-only training
+    device = "cuda:0"            # "cuda:0" for GPU, "cpu" for CPU-only training
     
     # Network architecture - adjust based on your hardware
     # Bigger networks learn better but require more GPU/CPU power
@@ -229,7 +229,7 @@ if __name__ == "__main__":
                       timestep_limit=10e15,                 # Effectively infinite - stop manually
                       
                       # ===== RENDERING =====
-                      render=True,                         # Set to True to watch bot play (slows training)
+                      render=False,                         # Set to True to watch bot play (slows training)
                       render_delay=STEP_TIME,
                       
                       # ===== LOGGING =====
