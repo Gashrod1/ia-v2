@@ -116,13 +116,11 @@ def build_rocketsim_env():
         # Format is (func, weight)
         # PHASE 1: Learn to consistently hit the ball
         (EventReward(touch=1), 10.0),              # PRIMARY: Reward every ball touch heavily
-        (SpeedTowardBallReward(), 2.0),            # Move toward ball aggressively
+        (SpeedTowardBallReward(), 4.0),            # Move toward ball aggressively
         (FaceBallReward(), 0.5),                   # Orient toward ball, don't drive backward
         (VelocityPlayerToBallReward(), 1.0),       # Get to ball first (competitive)
-        (EventReward(team_goal=1, concede=-1), 10), # Still reward goals, but not primary focus
-        (VelocityBallToGoalReward(), 1.0),         # Light directional guidance
-        (HandbrakePenalty(), 1.0),                 # Prevent sloppy handbrake usage
-        (FlipDisciplineReward(), 1.0),             # Prevent wasteful flips during approach
+        (EventReward(team_goal=1, concede=-1), 20), # Still reward goals, but not primary focus
+        (VelocityBallToGoalReward(), 5.0),         # Light directional guidance
     )
 
     obs_builder = DefaultObs(
@@ -153,7 +151,7 @@ if __name__ == "__main__":
     # ========================================================================
     # HARDWARE CONFIGURATION
     # ========================================================================
-    n_proc = 80                  # Number of parallel game instances (adjust for your CPU)
+    n_proc = 1                  # Number of parallel game instances (adjust for your CPU)
     minibatch_size = 50_000      # Must divide evenly into ppo_batch_size
     device = "cpu"            # "cuda:0" for GPU, "cpu" for CPU-only training
     
