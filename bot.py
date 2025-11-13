@@ -115,14 +115,14 @@ def build_rocketsim_env():
     reward_fn = CombinedReward.from_zipped(
         # Format is (func, weight)
         # PHASE 2: Bot hits ball consistently, now learn to score goals
-        (EventReward(team_goal=1, concede=-1), 20),  # Goal reward (guide says ~20, not massive)
-        (VelocityBallToGoalReward(), 5.0),           # PRIMARY: Push ball toward goal (stronger than approach)
-        (TouchStrengthReward(), 3.0),                # Reward strong touches, not weak pushes
-        (VelocityPlayerToBallReward(), 1.0),         # Get to ball first (ZERO-SUM competitive)
-        (SpeedTowardBallReward(), 1.0),              # Move toward ball (reduced, less than VelocityBallToGoal)
-        (SaveBoostReward(), 0.5),                    # Encourage collecting and saving boost
-        (FaceBallReward(), 0.1),                     # Don't drive backward at ball
-        (InAirReward(), 0.15),                       # Don't forget how to jump (guide recommends 0.15)
+        (EventReward(team_goal=1, concede=-1), 50),  # MASSIVELY increased - scoring is the objective!
+        (VelocityBallToGoalReward(), 10.0),          # DOUBLED - push ball toward goal is PRIMARY
+        (TouchStrengthReward(), 1.5),                # REDUCED - don't farm weak touches
+        (VelocityPlayerToBallReward(), 0.5),         # REDUCED - getting to ball is less important
+        (SpeedTowardBallReward(), 0.3),              # REDUCED - approach is minor
+        (SaveBoostReward(), 0.3),                    # REDUCED - boost management is secondary
+        (FaceBallReward(), 0.05),                    # REDUCED - minor correction only
+        (InAirReward(), 0.1),                        # REDUCED - don't forget jumping
     )
 
     obs_builder = DefaultObs(
@@ -153,9 +153,9 @@ if __name__ == "__main__":
     # ========================================================================
     # HARDWARE CONFIGURATION
     # ========================================================================
-    n_proc = 96                  # Number of parallel game instances (adjust for your CPU)
+    n_proc = 1                  # Number of parallel game instances (adjust for your CPU)
     minibatch_size = 50_000      # Must divide evenly into ppo_batch_size
-    device = "cuda:0"            # "cuda:0" for GPU, "cpu" for CPU-only training
+    device = "cpu"            # "cuda:0" for GPU, "cpu" for CPU-only training
     
     # Network architecture - adjust based on your hardware
     # Bigger networks learn better but require more GPU/CPU power
