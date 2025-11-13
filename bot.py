@@ -153,7 +153,7 @@ if __name__ == "__main__":
     # ========================================================================
     # HARDWARE CONFIGURATION
     # ========================================================================
-    n_proc = 64                  # Number of parallel game instances (adjust for your CPU)
+    n_proc = 96                  # Number of parallel game instances (adjust for your CPU)
     minibatch_size = 50_000      # Must divide evenly into ppo_batch_size
     device = "cuda:0"            # "cuda:0" for GPU, "cpu" for CPU-only training
     
