@@ -114,10 +114,13 @@ def build_rocketsim_env():
     
     reward_fn = CombinedReward.from_zipped(
         # Format is (func, weight)
-        (EventReward(touch=1), 50),              # GIANT reward for hitting the ball - top priority!
-        (SpeedTowardBallReward(), 5),            # Move towards the ball
-        (FaceBallReward(), 1),                   # Don't drive backward at the ball
-        (InAirReward(), 0.15),                   # Don't forget how to jump! Increase if bot stops jumping
+        # PHASE 2: Bot hits ball consistently, now learn to score goals
+        (EventReward(goal=10, team_goal=5), 25),  # HUGE reward for scoring goals!
+        (VelocityPlayerToBallReward(), 5.0),       # Zero-sum: get to ball first (competitive)
+        (EventReward(touch=1), 5),                # Still reward touches, but less than before
+        (SpeedTowardBallReward(), 1),              # Move towards the ball (reduced)
+        (FaceBallReward(), 0.2),                     # Don't drive backward at the ball
+        (InAirReward(), 0.15),                     # Don't forget how to jump!
     )
 
     obs_builder = DefaultObs(
