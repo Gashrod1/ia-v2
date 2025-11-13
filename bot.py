@@ -115,11 +115,11 @@ def build_rocketsim_env():
     reward_fn = CombinedReward.from_zipped(
         # Format is (func, weight)
         # PHASE 1: Learn to consistently hit the ball
-        (EventReward(touch=1), 10.0),              # PRIMARY: Reward every ball touch heavily
+        (EventReward(touch=1), 2.0),              # PRIMARY: Reward every ball touch heavily
         (SpeedTowardBallReward(), 4.0),            # Move toward ball aggressively
         (FaceBallReward(), 0.5),                   # Orient toward ball, don't drive backward
         (VelocityPlayerToBallReward(), 1.0),       # Get to ball first (competitive)
-        (EventReward(team_goal=1, concede=-1), 20), # Still reward goals, but not primary focus
+        (EventReward(team_goal=1, concede=-1), 40), # Still reward goals, but not primary focus
         (VelocityBallToGoalReward(), 5.0),         # Light directional guidance
     )
 
