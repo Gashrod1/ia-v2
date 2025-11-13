@@ -33,92 +33,55 @@ STEP_TIME = TICK_SKIP / GAME_TICK_RATE  # Time between steps in seconds (8/120 =
 class ExampleLogger(MetricsLogger):
     def __init__(self):
         super().__init__()
-        # Cumulative tracking (never reset)
-        self.total_touches = 0
-        self.total_goals = 0
-        self.total_episodes = 0
-        
-        # Per-iteration tracking (reset after each report)
-        self.iteration_touches = 0
-        self.iteration_goals = 0
-        self.iteration_steps = 0
-        
-        # Previous state tracking (for detecting changes)
-        self.prev_ball_toucher = -1
+        self.prev_ball_toucher = None
         self.prev_blue_score = 0
         self.prev_orange_score = 0
+        self.total_touches = 0
+        self.total_goals = 0
+        self.episode_touches = 0
+        self.episode_goals = 0
         
-    def _collect_metrics(self, game_state: GameState) -> dict:
-        # Count steps
-        self.iteration_steps += 1
-        
-        # Detect ball touches (when last_touch changes)
+    def _collect_metrics(self, game_state: GameState) -> list:
+        # Détecter les touches (quand last_touch change)
         if game_state.last_touch != self.prev_ball_toucher and game_state.last_touch != -1:
             self.total_touches += 1
-            self.iteration_touches += 1
+            self.episode_touches += 1
             self.prev_ball_toucher = game_state.last_touch
             
-        # Detect goals scored
-        goals_this_step = 0
+        # Détecter les buts
         if game_state.blue_score > self.prev_blue_score:
-            goals_this_step += (game_state.blue_score - self.prev_blue_score)
+            self.total_goals += 1
+            self.episode_goals += 1
             self.prev_blue_score = game_state.blue_score
             
         if game_state.orange_score > self.prev_orange_score:
-            goals_this_step += (game_state.orange_score - self.prev_orange_score)
+            self.total_goals += 1
+            self.episode_goals += 1
             self.prev_orange_score = game_state.orange_score
         
-        if goals_this_step > 0:
-            self.total_goals += goals_this_step
-            self.iteration_goals += goals_this_step
-            self.total_episodes += goals_this_step  # Each goal = end of episode
-        
-        # Collect data to report
-        return {
-            'ball_height': game_state.ball.position[2],
-            'ball_speed': np.linalg.norm(game_state.ball.linear_velocity),
-            'num_players': len(game_state.players),
-        }
+        return [game_state.players[0].car_data.linear_velocity,
+                game_state.players[0].car_data.rotation_mtx(),
+                game_state.orange_score]
 
     def _report_metrics(self, collected_metrics, wandb_run, cumulative_timesteps):
-        if not collected_metrics:
-            return
-            
-        # Calculate averages across the iteration
-        avg_ball_height = np.mean([m['ball_height'] for m in collected_metrics])
-        avg_ball_speed = np.mean([m['ball_speed'] for m in collected_metrics])
-        num_players = collected_metrics[0]['num_players']
+        avg_linvel = np.zeros(3)
+        for metric_array in collected_metrics:
+            p0_linear_velocity = metric_array[0]
+            avg_linvel += p0_linear_velocity
+        avg_linvel /= len(collected_metrics)
         
-        # Calculate per-player stats
-        touches_per_player = self.iteration_touches / num_players if num_players > 0 else 0
+        report = {"x_vel":avg_linvel[0],
+                  "y_vel":avg_linvel[1],
+                  "z_vel":avg_linvel[2],
+                  "total_touches": self.total_touches,
+                  "total_goals": self.total_goals,
+                  "episode_touches": self.episode_touches,
+                  "episode_goals": self.episode_goals,
+                  "Cumulative Timesteps":cumulative_timesteps}
         
-        # Calculate episode duration in seconds
-        avg_episode_duration_seconds = (self.iteration_steps * STEP_TIME) / max(1, self.iteration_goals)
-        
-        report = {
-            # Cumulative stats (total since training started)
-            "Stats/Total Touches": self.total_touches,
-            "Stats/Total Goals": self.total_goals,
-            "Stats/Total Episodes": self.total_episodes,
-            
-            # Iteration stats (this batch only)
-            "Stats/Touches This Iteration": self.iteration_touches,
-            "Stats/Goals This Iteration": self.iteration_goals,
-            "Stats/Touches Per Player": touches_per_player,
-            "Stats/Avg Episode Duration (s)": avg_episode_duration_seconds,
-            
-            # Ball stats
-            "Ball/Average Height": avg_ball_height,
-            "Ball/Average Speed": avg_ball_speed,
-            
-            # Required
-            "Cumulative Timesteps": cumulative_timesteps
-        }
-        
-        # Reset iteration counters
-        self.iteration_touches = 0
-        self.iteration_goals = 0
-        self.iteration_steps = 0
+        # Reset episode stats après le report
+        self.episode_touches = 0
+        self.episode_goals = 0
         
         wandb_run.log(report)
 
