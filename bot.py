@@ -116,11 +116,12 @@ def build_rocketsim_env():
         # Format is (func, weight)
         # PHASE 2: Bot hits ball consistently, now learn to score goals
         (EventReward(team_goal=1, concede=-1), 25),  # HUGE reward for scoring goals!
-        (VelocityPlayerToBallReward(), 5.0),       # Zero-sum: get to ball first (competitive)
-        (EventReward(touch=1), 5),                # Still reward touches, but less than before
-        (SpeedTowardBallReward(), 1),              # Move towards the ball (reduced)
-        (FaceBallReward(), 0.2),                     # Don't drive backward at the ball
-        (InAirReward(), 0.15),                     # Don't forget how to jump!
+        (VelocityBallToGoalReward(), 4.0), 
+        (VelocityPlayerToBallReward(), 1.0),       # Zero-sum: get to ball first (competitive)
+        (EventReward(touch=1), 3),                # Still reward touches, but less than before
+        (SpeedTowardBallReward(), 0.2),              # Move towards the ball (reduced)
+        (FaceBallReward(), 0.05),                     # Don't drive backward at the ball
+        (InAirReward(), 0.2),                     # Don't forget how to jump!
     )
 
     obs_builder = DefaultObs(
@@ -151,7 +152,7 @@ if __name__ == "__main__":
     # ========================================================================
     # HARDWARE CONFIGURATION
     # ========================================================================
-    n_proc = 80                  # Number of parallel game instances (adjust for your CPU)
+    n_proc = 1                  # Number of parallel game instances (adjust for your CPU)
     minibatch_size = 50_000      # Must divide evenly into ppo_batch_size
     device = "cpu"            # "cuda:0" for GPU, "cpu" for CPU-only training
     
@@ -226,7 +227,7 @@ if __name__ == "__main__":
                       timestep_limit=10e15,                 # Effectively infinite - stop manually
                       
                       # ===== RENDERING =====
-                      render=False,                         # Set to True to watch bot play (slows training)
+                      render=True,                         # Set to True to watch bot play (slows training)
                       render_delay=STEP_TIME,
                       
                       # ===== LOGGING =====
