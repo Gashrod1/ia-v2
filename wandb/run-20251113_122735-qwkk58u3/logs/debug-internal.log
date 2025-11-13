@@ -1,0 +1,13 @@
+{"time":"2025-11-13T12:27:35.314664992Z","level":"INFO","msg":"stream: starting","core version":"0.22.3"}
+{"time":"2025-11-13T12:27:35.626709398Z","level":"INFO","msg":"stream: created new stream","id":"qwkk58u3"}
+{"time":"2025-11-13T12:27:35.62682045Z","level":"INFO","msg":"handler: started","stream_id":"qwkk58u3"}
+{"time":"2025-11-13T12:27:35.627141995Z","level":"INFO","msg":"stream: started","id":"qwkk58u3"}
+{"time":"2025-11-13T12:27:35.627162275Z","level":"INFO","msg":"writer: started","stream_id":"qwkk58u3"}
+{"time":"2025-11-13T12:27:35.627173325Z","level":"INFO","msg":"sender: started","stream_id":"qwkk58u3"}
+{"time":"2025-11-13T12:27:36.375376814Z","level":"ERROR","msg":"file transfer: upload: failed to upload: status: 400 Bad Request: error reading body: stream error: stream ID 3; PROTOCOL_ERROR; received from peer","task":"DefaultUploadTask{FileKind: 1, Path: /workspace/ia-v2/wandb/run-20251113_122735-qwkk58u3/files/wandb-metadata.json, Name: wandb-metadata.json, Url: https://storage.googleapis.com/wandb-production.appspot.com/gashfraude-epsi/rlgym-ppo/qwkk58u3/wandb-metadata.json?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gorilla-files-url-signer-man%40wandb-production.iam.gserviceaccount.com%2F20251113%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251113T122736Z&X-Goog-Expires=86399&X-Goog-Signature=4e8ace9647835ab88114e9d398fb6a62d605fa6ba5717b84560d9fa593d742ef6334a0cfbcbad330c94a0ad482a29c5965dfd1a82985217b425f81f9f000ddea5ec016a4a3589c3d2137e234c200c3814882db50d848390816a4859aa59e4c53ef5555555bc8ba8a1b6c73a388c8b48edba651851fa7e14dbdcbc5953364df23229df970fbe62f03307e10a35709870db1fd8de21666931f3ca3499f98408563f9e6a9be0dd9b454d83cdcc340c6f53a63eba0651c2628dc45183e269aa4c953c50ae710cc78ebf825ab56a09201373578502c0e2ec2ac9707ec23721ba1c1ae893e50633712c8d0a07d2c29538043c2972fbf693ce5e11bc9ce413a44417bd8&X-Goog-SignedHeaders=host&X-User=gashfraude, Size: 551}"}
+{"time":"2025-11-13T14:06:32.555197774Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-11-13T14:06:32.757083112Z","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-11-13T14:06:32.763240485Z","level":"INFO","msg":"stream: closing","id":"qwkk58u3"}
+{"time":"2025-11-13T14:06:32.763294846Z","level":"INFO","msg":"handler: closed","stream_id":"qwkk58u3"}
+{"time":"2025-11-13T14:06:32.763541969Z","level":"INFO","msg":"sender: closed","stream_id":"qwkk58u3"}
+{"time":"2025-11-13T14:06:32.76357227Z","level":"INFO","msg":"stream: closed","id":"qwkk58u3"}
