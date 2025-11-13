@@ -115,7 +115,7 @@ def build_rocketsim_env():
     reward_fn = CombinedReward.from_zipped(
         # Format is (func, weight)
         # PHASE 2: Bot hits ball consistently, now learn to score goals
-        (EventReward(goal=10, team_goal=5), 25),  # HUGE reward for scoring goals!
+        (EventReward(team_goal=1, concede=-1), 25),  # HUGE reward for scoring goals!
         (VelocityPlayerToBallReward(), 5.0),       # Zero-sum: get to ball first (competitive)
         (EventReward(touch=1), 5),                # Still reward touches, but less than before
         (SpeedTowardBallReward(), 1),              # Move towards the ball (reduced)
