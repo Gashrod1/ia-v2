@@ -1,0 +1,13 @@
+{"time":"2025-11-14T13:42:03.883248789Z","level":"INFO","msg":"stream: starting","core version":"0.23.0"}
+{"time":"2025-11-14T13:42:04.284000584Z","level":"INFO","msg":"stream: created new stream","id":"qwkk58u3"}
+{"time":"2025-11-14T13:42:04.284111213Z","level":"INFO","msg":"handler: started","stream_id":"qwkk58u3"}
+{"time":"2025-11-14T13:42:04.28443437Z","level":"INFO","msg":"stream: started","id":"qwkk58u3"}
+{"time":"2025-11-14T13:42:04.284439675Z","level":"INFO","msg":"writer: started","stream_id":"qwkk58u3"}
+{"time":"2025-11-14T13:42:04.284455736Z","level":"INFO","msg":"sender: started","stream_id":"qwkk58u3"}
+{"time":"2025-11-14T17:06:05.074152706Z","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/gashfraude-epsi/rlgym-ppo/qwkk58u3/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-11-14T19:28:43.253063687Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-11-14T19:28:43.53704726Z","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-11-14T19:28:43.544864099Z","level":"INFO","msg":"stream: closing","id":"qwkk58u3"}
+{"time":"2025-11-14T19:28:43.54489773Z","level":"INFO","msg":"handler: closed","stream_id":"qwkk58u3"}
+{"time":"2025-11-14T19:28:43.545113344Z","level":"INFO","msg":"sender: closed","stream_id":"qwkk58u3"}
+{"time":"2025-11-14T19:28:43.54514168Z","level":"INFO","msg":"stream: closed","id":"qwkk58u3"}
