@@ -102,14 +102,16 @@ class HandbrakePenalty(RewardFunction):
 
 class FlipDisciplineReward(RewardFunction):
     """
-    HEAVILY penalizes wasteful flips to prevent flip spam.
-    Only allows flips when very close to ball or very far away.
+    Penalizes wasteful flips during approach, but allows speed flips.
+    - Allow flips when far from ball (speed recovery)
+    - Allow flips when very close to ball (shooting)
+    - PENALIZE flips in mid-range approach (loses control)
     """
-    def __init__(self, close_distance=300, far_distance=2500, heavy_penalty=2.0):
+    def __init__(self, close_distance=350, far_distance=1800, penalty=2.0):
         super().__init__()
-        self.close_distance = close_distance
-        self.far_distance = far_distance
-        self.heavy_penalty = heavy_penalty
+        self.close_distance = close_distance  # Can flip when very close (shooting)
+        self.far_distance = far_distance      # Can flip when far (speed recovery)
+        self.penalty = penalty
         self.was_on_ground = True
         
     def reset(self, initial_state: GameState):
@@ -123,7 +125,7 @@ class FlipDisciplineReward(RewardFunction):
         currently_on_ground = player.on_ground
         
         if self.was_on_ground and not currently_on_ground:
-            # Just left ground - check if it's a flip (has pitch/yaw/roll input)
+            # Just left ground - check if it's a flip
             pitch = abs(previous_action[2]) if len(previous_action) > 2 else 0
             yaw = abs(previous_action[3]) if len(previous_action) > 3 else 0
             roll = abs(previous_action[4]) if len(previous_action) > 4 else 0
@@ -133,10 +135,13 @@ class FlipDisciplineReward(RewardFunction):
                 pos_diff = state.ball.position - player.car_data.position
                 dist_to_ball = np.linalg.norm(pos_diff)
                 
-                # HEAVY penalty for flips in mid-range (approach phase)
+                # ONLY penalize flips in the dangerous mid-range zone
+                # Far away (>1800): OK - speed flip to recover
+                # Very close (<350): OK - flip shot
+                # Mid-range (350-1800): BAD - loses control during approach
                 if self.close_distance < dist_to_ball < self.far_distance:
                     self.was_on_ground = currently_on_ground
-                    return -self.heavy_penalty
+                    return -self.penalty
         
         self.was_on_ground = currently_on_ground
         return 0
