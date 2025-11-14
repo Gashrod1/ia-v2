@@ -1,0 +1,40 @@
+{
+  "os": "Linux-6.8.0-52-generic-x86_64-with-glibc2.39",
+  "python": "CPython 3.12.11",
+  "startedAt": "2025-11-14T07:23:57.204487Z",
+  "program": "/workspace/ia-v2/bot.py",
+  "codePath": "bot.py",
+  "codePathLocal": "bot.py",
+  "git": {
+    "remote": "https://github.com/Gashrod1/ia-v2.git",
+    "commit": "0b4446736f2590ea000ea1466c12d59c8589a1b4"
+  },
+  "email": "cuteslenaa@gmail.com",
+  "root": "/workspace/ia-v2",
+  "host": "986865126dd1",
+  "executable": "/venv/main/bin/python",
+  "cpu_count": 14,
+  "cpu_count_logical": 28,
+  "gpu": "NVIDIA GeForce RTX 3060",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "21474836480",
+      "used": "2500280320"
+    }
+  },
+  "memory": {
+    "total": "67333267456"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 3060",
+      "memoryTotal": "12884901888",
+      "cudaCores": 3584,
+      "architecture": "Ampere",
+      "uuid": "GPU-6d960126-21ec-4c7a-7357-2163f48305a2"
+    }
+  ],
+  "cudaVersion": "12.8",
+  "writerId": "nekdpbj23rg59idzdeuj169kjzmj80ui"
+}
