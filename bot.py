@@ -22,7 +22,7 @@ torch.load = _patched_torch_load
 
 from rlgym_sim.utils.gamestates import GameState
 from rlgym_ppo.util import MetricsLogger
-from rewards import InAirReward, SpeedTowardBallReward, HandbrakePenalty, FlipDisciplineReward, SaveBoostReward, TouchStrengthReward
+from rewards import InAirReward, SpeedTowardBallReward, HandbrakePenalty, FlipDisciplineReward, SaveBoostReward, TouchStrengthReward, AirTouchReward
 
 # Game timing constants
 TICK_SKIP = 8  # Number of physics ticks per step
@@ -114,15 +114,17 @@ def build_rocketsim_env():
     
     reward_fn = CombinedReward.from_zipped(
         # Format is (func, weight)
-        # PHASE 2: Bot hits ball consistently, now learn to score goals
-        (EventReward(team_goal=1, concede=-1), 50),  # MASSIVELY increased - scoring is the objective!
-        (VelocityBallToGoalReward(), 10.0),          # DOUBLED - push ball toward goal is PRIMARY
-        (TouchStrengthReward(), 1.5),                # REDUCED - don't farm weak touches
-        (VelocityPlayerToBallReward(), 0.5),         # REDUCED - getting to ball is less important
-        (SpeedTowardBallReward(), 0.3),              # REDUCED - approach is minor
-        (SaveBoostReward(), 0.3),                    # REDUCED - boost management is secondary
-        (FaceBallReward(), 0.05),                    # REDUCED - minor correction only
-        (InAirReward(), 0.1),                        # REDUCED - don't forget jumping
+        # PHASE 2+: Bot scores, now learn better mechanics (aerials, less flips)
+        (EventReward(team_goal=1, concede=-1), 50),  # Goals are the objective!
+        (VelocityBallToGoalReward(), 10.0),          # PRIMARY: push ball toward goal
+        (AirTouchReward(), 5.0),                     # NEW: Reward aerial touches (guide recommendation)
+        (TouchStrengthReward(), 1.5),                # Reward strong hits
+        (VelocityPlayerToBallReward(), 0.5),         # Get to ball first
+        (SpeedTowardBallReward(), 0.3),              # Approach ball
+        (SaveBoostReward(), 0.3),                    # Don't waste boost
+        (FaceBallReward(), 0.05),                    # Face ball
+        (FlipDisciplineReward(), 3.0),               # INCREASED: HEAVY penalty for wasteful flips
+        (HandbrakePenalty(), 1.0),                   # Penalty for handbrake spam
     )
 
     obs_builder = DefaultObs(

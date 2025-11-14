@@ -102,53 +102,78 @@ class HandbrakePenalty(RewardFunction):
 
 class FlipDisciplineReward(RewardFunction):
     """
-    Encourage strategic flip usage: 
-    - Reward flips when very close to ball (attacking)
-    - Allow flips when far from ball (recovering speed)
-    - PENALIZE flips in mid-range (loses control during approach)
+    HEAVILY penalizes wasteful flips to prevent flip spam.
+    Only allows flips when very close to ball or very far away.
     """
-    def __init__(self, close_distance=400, far_distance=2000, penalty=1.0):
+    def __init__(self, close_distance=300, far_distance=2500, heavy_penalty=2.0):
         super().__init__()
-        self.close_distance = close_distance  # Distance pour "attaquer" la balle
-        self.far_distance = far_distance      # Distance pour "récupérer"
-        self.penalty = penalty
-        self.last_on_ground = True
-        self.flip_detected = False
+        self.close_distance = close_distance
+        self.far_distance = far_distance
+        self.heavy_penalty = heavy_penalty
+        self.was_on_ground = True
         
     def reset(self, initial_state: GameState):
-        self.last_on_ground = True
-        self.flip_detected = False
+        self.was_on_ground = True
     
     def get_reward(self, player: PlayerData, state: GameState, previous_action: np.ndarray) -> float:
-        # Détecter un flip : le joueur était au sol et saute maintenant (double saut)
-        # previous_action: [throttle, steer, pitch, yaw, roll, jump, boost, handbrake]
-        
         if len(previous_action) <= 5:
             return 0
         
-        jump_action = previous_action[5]  # Index 5 = jump
+        # Detect flip: was on ground, now in air with pitch/roll input
         currently_on_ground = player.on_ground
         
-        # Détecter transition sol -> air avec input jump = flip probable
-        # Note: détection simplifiée - le vrai flip est double jump mais difficile à détecter
-        # On pénalise les sauts en approche moyenne
+        if self.was_on_ground and not currently_on_ground:
+            # Just left ground - check if it's a flip (has pitch/yaw/roll input)
+            pitch = abs(previous_action[2]) if len(previous_action) > 2 else 0
+            yaw = abs(previous_action[3]) if len(previous_action) > 3 else 0
+            roll = abs(previous_action[4]) if len(previous_action) > 4 else 0
+            
+            # If any aerial input is significant, it's likely a flip
+            if pitch > 0.3 or yaw > 0.3 or roll > 0.3:
+                pos_diff = state.ball.position - player.car_data.position
+                dist_to_ball = np.linalg.norm(pos_diff)
+                
+                # HEAVY penalty for flips in mid-range (approach phase)
+                if self.close_distance < dist_to_ball < self.far_distance:
+                    self.was_on_ground = currently_on_ground
+                    return -self.heavy_penalty
         
-        if not currently_on_ground and jump_action > 0.5:
-            # Le joueur saute (potentiellement flip)
-            pos_diff = state.ball.position - player.car_data.position
-            dist_to_ball = np.linalg.norm(pos_diff)
-            
-            # Zone dangereuse : distance moyenne (perd contrôle)
-            if self.close_distance < dist_to_ball < self.far_distance:
-                # PÉNALITÉ : flip en approche = perte de contrôle
-                return -self.penalty
-            
-            # Zones OK : très proche (attaque) ou très loin (récupération)
-            # Pas de pénalité, comportement neutre
+        self.was_on_ground = currently_on_ground
+        return 0
+
+
+class AirTouchReward(RewardFunction):
+    """
+    Rewards aerial touches based on ball height and air time.
+    Encourages learning small aerials as described in the guide.
+    """
+    def __init__(self):
+        super().__init__()
+        from rlgym_sim.utils.common_values import CEILING_Z
+        self.CEILING_Z = CEILING_Z
+        self.MAX_AIR_TIME = 1.75  # Max reasonable aerial time in seconds
+        
+    def reset(self, initial_state: GameState):
+        pass
+    
+    def get_reward(self, player: PlayerData, state: GameState, previous_action: np.ndarray) -> float:
+        # Only reward if player touched ball while in air
+        if not player.ball_touched or player.on_ground:
             return 0
         
-        self.last_on_ground = currently_on_ground
-        return 0
+        # Calculate height fraction (0 to 1)
+        ball_height = state.ball.position[2]
+        height_frac = ball_height / self.CEILING_Z
+        
+        # Calculate air time fraction (0 to 1)
+        air_time = player.car_data.air_time if hasattr(player.car_data, 'air_time') else 0
+        air_time_frac = min(air_time, self.MAX_AIR_TIME) / self.MAX_AIR_TIME
+        
+        # Reward is minimum of height and air time
+        # This prevents wall-shot farming (high ball but low air time)
+        reward = min(height_frac, air_time_frac)
+        
+        return reward
 
 
 class SaveBoostReward(RewardFunction):
