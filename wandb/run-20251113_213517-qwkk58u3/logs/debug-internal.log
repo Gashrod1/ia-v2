@@ -1,0 +1,10 @@
+{"time":"2025-11-13T21:35:17.594074701Z","level":"INFO","msg":"stream: starting","core version":"0.23.0"}
+{"time":"2025-11-13T21:35:17.977212254Z","level":"INFO","msg":"stream: created new stream","id":"qwkk58u3"}
+{"time":"2025-11-13T21:35:17.977299769Z","level":"INFO","msg":"handler: started","stream_id":"qwkk58u3"}
+{"time":"2025-11-13T21:35:17.977566074Z","level":"INFO","msg":"stream: started","id":"qwkk58u3"}
+{"time":"2025-11-13T21:35:17.977597674Z","level":"INFO","msg":"writer: started","stream_id":"qwkk58u3"}
+{"time":"2025-11-13T21:35:17.977607784Z","level":"INFO","msg":"sender: started","stream_id":"qwkk58u3"}
+{"time":"2025-11-13T21:44:55.81726542Z","level":"INFO","msg":"stream: closing","id":"qwkk58u3"}
+{"time":"2025-11-13T21:44:55.840732081Z","level":"ERROR","msg":"sender: sendSummary called after exit"}
+{"time":"2025-11-13T21:44:55.841738782Z","level":"WARN","msg":"sender: received Exit record more than once, ignoring"}
+{"time":"2025-11-13T21:44:56.522388015Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
